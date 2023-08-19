@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
 <link href="style.css" rel="stylesheet">
 </head>
-<body>
+<body onload="getlocation()">
 <nav class="navbar navbar-toggleable-md navbar-light bg-white fixed-top mediumnavigation">
 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 <span class="navbar-toggler-icon"></span>
@@ -37,7 +37,9 @@
 	<div class="mainheading">
 		<h1 class="sitetitle" dir="rtl">مدونة يوسف</h1>
 		<p class="lead" dir="rtl">
-			 اهلا بك  تصفح المواضيع
+		
+		اهلا بك  تصفح المواضيع
+			
 		</p>
 	</div>
 
@@ -192,6 +194,52 @@
 						</div>
 					</div>
 				</div>
-			</div>
+		
+			<p>Click the button to get your coordinates.</p>
+
+<button onclick="getLocation()"
+
+<p id="demo"></p>
+
+<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+const xhttp = new  XMLHttpRequest();
+	xhttp.open("GET", "save_location.php?lat="+ position.coords.longitude +"&long="+ position.coords.longitude, );
+xhttp.send();
+	
+	
+	
+	x.innerHTML = "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude;
+}
+
+function showError(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+      x.innerHTML = "User denied the request for Geolocation."
+      break;
+    case error.POSITION_UNAVAILABLE:
+      x.innerHTML = "Location information is unavailable."
+      break;
+    case error.TIMEOUT:
+      x.innerHTML = "The request to get user location timed out."
+      break;
+    case error.UNKNOWN_ERROR:
+      x.innerHTML = "An unknown error occurred."
+      break;
+  }
+}
+</script>
+</div>
 		</div>
 		<!-- end post -->
